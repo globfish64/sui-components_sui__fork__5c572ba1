@@ -45,6 +45,36 @@ SUI is a set of packages which goal to ease development of SUI-based components 
 | [sui-studio](./packages/sui-studio) | Develop, maintain and publish your SUI components catalog. |
 | [sui-svg](./packages/sui-svg) | Converts your SVG files into React Components |
 | [sui-test](./packages/sui-test) | Zero config testing tool. |
+
+### Adding a test case using spy
+
+Let's imagine we have a class with a method that we want to test without calling the actual implementation.
+
+We can use `sinon.spy()` to replace the method with a "spy" that will record information about the calls made to it.
+
+This is useful for verifying that a method was called with the correct arguments, or for checking how many times a method was called.
+
+**Example**
+
+```javascript
+import sinon from 'sinon'
+
+// imagine this is the class we want to test
+class MyClass {
+  myMethod() {
+    // some implementation
+  }
+}
+// create a spy on the `myMethod` method of a `MyClass` instance
+const myClassInstance = new MyClass()
+const spy = sinon.spy(myClassInstance, 'myMethod')
+// call the method
+myClassInstance.myMethod()
+// assert that the spy was called once
+expect(spy.calledOnce).to.be.true
+// restore the original method
+spy.restore()
+```
 | [sui-test-contract](./packages/sui-test-contract) | Useful tooling for executing contract tests |
 | [sui-test-e2e](./packages/sui-test-e2e) | Zero config e2e testing tool. |
 | [sui-theme](./packages/sui-theme) | Theme system for SUI |
